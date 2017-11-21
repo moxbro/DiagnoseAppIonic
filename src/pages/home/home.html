@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <button ion-button (click)="nextPage()">Default</button>
+
+  <!--
+  <ion-card>
+    
+      <ion-card-header>
+        My own Card Header
+      </ion-card-header>
+    
+      <ion-card-content>
+        This is something
+        <button ion-button block=true outline=true color=danger>Default</button>
+        <button ion-fab mini>+</button>
+      </ion-card-content>
+    
+  </ion-card>
+-->
+
+  <ion-list>
+    <ion-item *ngFor="let name of names" ion-item (click)="ListItemClick()">
+      {{ name }}
+    </ion-item>
+  </ion-list>
+
+</ion-content>
