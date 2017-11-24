@@ -35,6 +35,8 @@ export class HomePage {
 }*/
 
   public nextPage() {
+    //Example passing Data through Pages
+    //this.navCtrl.push(ShowDiseasesPage, {SQLiteObject: this.sqlite});
     this.navCtrl.push(ShowDiseasesPage);
   }
 
