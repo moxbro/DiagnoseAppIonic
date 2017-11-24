@@ -8,12 +8,14 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ShowDiseasesPage } from '../pages/show-diseases/show-diseases';
+import { ShowSymptomsPage } from '../pages/show-symptoms/show-symptoms';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ShowDiseasesPage   
+    ShowDiseasesPage,
+    ShowSymptomsPage   
   ],
   imports: [
     BrowserModule,
@@ -23,7 +25,8 @@ import { ShowDiseasesPage } from '../pages/show-diseases/show-diseases';
   entryComponents: [
     MyApp,
     HomePage,
-    ShowDiseasesPage
+    ShowDiseasesPage,
+    ShowSymptomsPage
   ],
   providers: [
     StatusBar,

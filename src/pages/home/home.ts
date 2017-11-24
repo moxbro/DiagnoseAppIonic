@@ -4,6 +4,7 @@ import { NavController, AlertController } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 import { ShowDiseasesPage } from '../show-diseases/show-diseases'
+import { ShowSymptomsPage } from '../show-symptoms/show-symptoms'
 
 @Component({
   selector: 'page-home',
@@ -37,7 +38,7 @@ export class HomePage {
   public nextPage() {
     //Example passing Data through Pages
     //this.navCtrl.push(ShowDiseasesPage, {SQLiteObject: this.sqlite});
-    this.navCtrl.push(ShowDiseasesPage);
+    this.navCtrl.push(ShowSymptomsPage);
   }
 
   public ListItemClick() {
