@@ -20,7 +20,7 @@ export class HomePage {
         let rows = data.rows;
         for (let i = 0; i < rows.length; i++)
           this.names.push(rows.item(i).Name);
-        console.log("Number of names on database = " + this.names.length);
+        console.log("Number of Synonyms on database = " + this.names.length);
       })
     });
     /*this.accessDB();*/
