@@ -10,26 +10,26 @@
     <ion-title>'show-symptoms'</ion-title>
   </ion-navbar>
 
+  <link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
+  <script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
+
 </ion-header>
 
 
 <ion-content padding>
 
-  <ion-card>
+  <div class="card">
 
-    <ion-card-header>
+    <div class="item item-balanced item-divider">
       Chose a Symptom
-    </ion-card-header>
+    </div>
 
-    <ion-card-content>
       <ion-list>
         <ion-item *ngFor="let name of names" ion-item (click)="ListItemClick()">
           {{ name }}
         </ion-item>
-      </ion-list>
-    </ion-card-content>
 
-  </ion-card>
+  </div>
 
 
 </ion-content>
