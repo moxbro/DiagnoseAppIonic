@@ -25,7 +25,8 @@
   <ion-card>
 
     <ion-card-header>
-      <ion-input id="search" (change)="typing(search)" placeholder="search"> </ion-input>
+      <!--(change)="typing(search)"-->
+      <ion-input [(ngModel)]="search" (input)="typing(search)" placeholder="search"> </ion-input>
     </ion-card-header>
 
     <ion-card-content>
