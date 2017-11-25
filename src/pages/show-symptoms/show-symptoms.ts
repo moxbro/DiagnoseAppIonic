@@ -17,7 +17,7 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 })
 export class ShowSymptomsPage {
   private options = { name: "DbDiagnosis.db", location: 'default', createFromLocation: 1 };
-  private queryNames = "SELECT Name FROM Synonyms";
+  private queryNames = "SELECT Name FROM TargetSynonymsVisible";
   public names: String[] = [];
   public namesShown: String[] = [];
 
