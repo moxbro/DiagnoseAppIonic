@@ -35,4 +35,8 @@ export class ShowSymptomsPage {
     console.log('ionViewDidLoad ShowSymptomsPage');
   }
 
+  public typing($value){
+    this.names[0] = $value;
+  }
+
 }
