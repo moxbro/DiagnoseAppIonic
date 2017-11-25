@@ -19,6 +19,7 @@ export class ShowSymptomsPage {
   private options = { name: "DbDiagnosis.db", location: 'default', createFromLocation: 1 };
   private queryNames = "SELECT Name FROM Synonyms";
   public names: String[] = [];
+  public namesShown: String[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite) {
     this.sqlite.create(this.options).then((db: SQLiteObject) => {
@@ -29,6 +30,7 @@ export class ShowSymptomsPage {
         console.log("Number of Synonyms on database = " + this.names.length);
       })
     });
+    this.namesShown = this.names;
   }
 
   ionViewDidLoad() {
@@ -36,7 +38,10 @@ export class ShowSymptomsPage {
   }
 
   public typing($value){
-    this.names[0] = $value;
+    //this.names[0] = $value;
+    //this.names = this.names.filter($value);
+    this.namesShown = this.names.filter((s: String) => s.match(new RegExp($value, "i")));
   }
+
 
 }
