@@ -47,14 +47,31 @@ export class ShowSymptomsPage {
 
   public ListItemClick($value) {
     this.chosenSymptoms.push($value);
-    
-    var index = this.names.indexOf($value);    
+
+    //Deleting selected item in names
+    var index = this.names.indexOf($value);
     if (index !== -1) {
-        this.names.splice(index, 1);
+      this.names.splice(index, 1);
     }
-    
+
+    //clearing searchQuery
     this.namesShown = [];
     this.searchQuery = "";
+  }
+
+  public deleteChosenSymptom($value) {
+    //deleting ChosenSymptom
+    var index = this.chosenSymptoms.indexOf($value);
+    if (index !== -1) {
+      this.chosenSymptoms.splice(index, 1);
+    }
+
+    //adding deleted item back to the List 'names'
+    this.names.push($value);
+  }
+
+  public getDignos() {
+
   }
 
 }

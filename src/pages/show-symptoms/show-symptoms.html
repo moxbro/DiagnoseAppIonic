@@ -16,32 +16,28 @@
 <ion-content padding>
 
   <ion-card *ngFor="let chosen of chosenSymptoms">
-      
-          <ion-card-content>
-            {{ chosen }}
-          </ion-card-content>
-      
-        </ion-card>
 
-  <ion-card>
-
-    <ion-card-header>
-      <!--(change)="typing(search)"-->
-      <ion-searchbar [(ngModel)]="searchQuery" (input)="typing(searchQuery)" placeholder="search"> </ion-searchbar>
-    </ion-card-header>
-
-    <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor="let name of namesShown" [(ngModel)]="selected"  (click)="ListItemClick(name)">
-          {{ name }}
-        </ion-item>
-      </ion-list>
+    <ion-card-content (click)="deleteChosenSymptom(chosen)">
+      {{ chosen }}
     </ion-card-content>
 
   </ion-card>
 
 
-    <!--<link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
+  <!--(change)="typing(search)"-->
+  <ion-searchbar [(ngModel)]="searchQuery" (input)="typing(searchQuery)" placeholder="search"> </ion-searchbar>
+
+  <ion-card>
+    <ion-list>
+      <ion-item *ngFor="let name of namesShown" [(ngModel)]="selected" (click)="ListItemClick(name)">
+        {{ name }}
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <button ion-button>Get Diagnos</button>
+
+  <!--<link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
   <script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
   -->
 
