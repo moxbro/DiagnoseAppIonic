@@ -20,6 +20,8 @@ export class ShowSymptomsPage {
   private queryNames = "SELECT Name FROM TargetSynonymsVisible";
   public names: String[] = [];
   public namesShown: String[] = [];
+  public chosenSymptoms: String[] = [];
+  private searchQuery: string = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite) {
     this.sqlite.create(this.options).then((db: SQLiteObject) => {
@@ -30,18 +32,29 @@ export class ShowSymptomsPage {
         console.log("Number of Synonyms on database = " + this.names.length);
       })
     });
-    this.namesShown = this.names;
+    //this.namesShown = this.names;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ShowSymptomsPage');
   }
 
-  public typing($value){
+  public typing($value) {
     //this.names[0] = $value;
     //this.names = this.names.filter($value);
     this.namesShown = this.names.filter((s: String) => s.match(new RegExp($value, "i")));
   }
 
+  public ListItemClick($value) {
+    this.chosenSymptoms.push($value);
+    
+    var index = this.names.indexOf($value);    
+    if (index !== -1) {
+        this.names.splice(index, 1);
+    }
+    
+    this.namesShown = [];
+    this.searchQuery = "";
+  }
 
 }
