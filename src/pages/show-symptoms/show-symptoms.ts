@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { ShowDiseasesPage } from '../show-diseases/show-diseases'
 
 /**
  * Generated class for the ShowSymptomsPage page.
@@ -70,8 +71,20 @@ export class ShowSymptomsPage {
     this.names.push($value);
   }
 
-  public getDignos() {
+  public getDiagnos() {
 
+    this.sqlite.create(this.options).then((db: SQLiteObject) => {
+      //db.executeSql("INSERT INTO ChosenSynonymsNames (Name, Source) VALUES (?,?)", 
+      //{chosenSymptoms: this.chosenSymptoms[0], Source: 2})});
+
+      db.executeSql("INSERT INTO ChosenSynonymsNames (Id, Source) VALUES (2,2)", 
+      []).then((data) => {
+        console.log("INSERTED: " + JSON.stringify(data));
+      })});
+
+    //Goto Diagnos
+    this.navCtrl.push(ShowDiseasesPage);
+    //this.navCtrl.push(ShowDiseasesPage, {chosenSymptoms: this.chosenSymptoms});
   }
 
 }
