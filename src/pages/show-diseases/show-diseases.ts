@@ -18,7 +18,6 @@ export class ShowDiseasesPage {
 
   private options = { name: "DbDiagnosis.db", location: 'default', createFromLocation: 1 };
   private queryNames = "SELECT  DiseaseName FROM ChosenSynonymsDiseases;";
-  private secoundqueryName = "SELECT Name FROM ChosenSynonymsNamesVisible;";
   public diseaseNames: String[] = [];
   public chosenSymptoms: String[] = [];
 

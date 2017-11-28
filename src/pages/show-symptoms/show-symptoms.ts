@@ -18,7 +18,8 @@ import { ShowDiseasesPage } from '../show-diseases/show-diseases'
 })
 export class ShowSymptomsPage {
   private options = { name: "DbDiagnosis.db", location: 'default', createFromLocation: 1 };
-  private queryNames = "SELECT Name FROM TargetSynonymsVisible";
+  private querySynonyms = "SELECT Name FROM TargetSynonymsVisible";
+  private queryChosenSymptoms = "SELECT Name FROM ChosenSynonymsNamesVisible;";
   public names: String[] = [];
   public namesShown: String[] = [];
   public values: String[] = [];
@@ -29,18 +30,31 @@ export class ShowSymptomsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite) {
     this.sqlite.create(this.options).then((db: SQLiteObject) => {
-      this.db = db.executeSql(this.queryNames, {}).then((data) => {
+      this.db = db.executeSql(this.querySynonyms, {}).then((data) => {
         let rows = data.rows;
         for (let i = 0; i < rows.length; i++)
           this.names.push(rows.item(i).Name);
         console.log("Number of Synonyms on database = " + this.names.length);
       })
     });
-    //this.namesShown = this.names;
+
+    this.loadChosenSymptoms();
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ShowSymptomsPage');
+  }
+
+  async loadChosenSymptoms() {
+    let db = await this.sqlite.create(this.options);
+    // Get already ChosenSymptoms
+    await db.executeSql(this.queryChosenSymptoms, {}).then((data) => {
+      let rows = data.rows;
+      for (let i = 0; i < rows.length; i++)
+        this.chosenSymptoms.push(rows.item(i).Name);
+      console.log("Number of Chosen Symptoms = " + this.chosenSymptoms.length);
+    });
   }
 
   public typing($value) {
@@ -63,7 +77,7 @@ export class ShowSymptomsPage {
     this.searchQuery = "";
   }
 
-  public deleteChosenSymptom($value) {
+  async deleteChosenSymptom($value) {
     //deleting ChosenSymptom
     var index = this.chosenSymptoms.indexOf($value);
     if (index !== -1) {
@@ -71,6 +85,15 @@ export class ShowSymptomsPage {
     }
     //adding deleted item back to the List 'names'
     this.names.push($value);
+
+    //deleting Chosen Symptoms DB
+    let db = await this.sqlite.create(this.options);
+    await db.executeSql("DELETE FROM ChosenSynonymsNames WHERE Name == (?);", [$value]).then((data) => {
+      console.log("Symptom " + $value + " deleted");
+    }, (error) => {
+      console.log("Delete Symptom ERROR: " + JSON.stringify(error.err));
+      console.log($value);
+    });
   }
 
   async dbReset() {
