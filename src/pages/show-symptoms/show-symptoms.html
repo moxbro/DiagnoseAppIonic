@@ -35,25 +35,16 @@
     </ion-list>
   </ion-card>
 
-  <button ion-button (click)="getDiagnos()" >Get Diagnos</button>
 
-  <!--<link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
-  <script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
-  -->
-
-  <!--doesn't work
-  <div class="card">
-
-    <div class="item item-balanced item-divider">
-      Chose a Symptom
-    </div>
-
-      <ion-list>
-        <ion-item *ngFor="let name of names" ion-item (click)="ListItemClick()">
-          {{ name }}
-        </ion-item>
-
-  </div>
-  -->
+  <button ion-button (click)="getDiagnos()" full large class="mainButton" [disabled] = !isenabled>Get Diagnos</button>
+  
 
 </ion-content>
+
+<!--
+<div style="position: absolute; bottom: 0px; width: 100%">
+
+    <button ion-button (click)="getDiagnos()" full large class="mainButton" [disabled] = !isenabled>Get Diagnos</button>
+
+</div>
+-->

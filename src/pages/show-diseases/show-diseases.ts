@@ -17,9 +17,10 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite'
 export class ShowDiseasesPage {
 
   private options = { name: "DbDiagnosis.db", location: 'default', createFromLocation: 1 };
-  private queryNames = "SELECT  DiseaseName FROM ChosenSynonymsDiseases;";
+  private queryNames = "SELECT  DiseaseName, DiseaseEval, DiseaseInfoNames, SymptomGroup, Valid, DiseaseInfoValue FROM ChosenSynonymsDiseases;";
   public diseaseNames: String[] = [];
   public chosenSymptoms: String[] = [];
+  //public diseases = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite) {
     this.sqlite.create(this.options).then((db: SQLiteObject) => {
@@ -27,7 +28,7 @@ export class ShowDiseasesPage {
         let rows = data.rows;
         for (let i = 0; i < rows.length; i++)
           this.diseaseNames.push(rows.item(i).DiseaseName);
-          console.log("ShowDiseases-Load: " + JSON.stringify(data));
+        console.log("ShowDiseases-Load: " + JSON.stringify(data));
       })
       //this.names.push(this.names.length.toString());
     });
@@ -36,15 +37,46 @@ export class ShowDiseasesPage {
 
     //Example passing Data through Pages
     //this.db = this.navParams.get('SQLiteObject');
-    
+
   }
 
-  
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ShowDiseasesPage');
   }
 
+
+
+}
+
+/*
+class Disease {
+  public DiseaseName;
+  public DiseaseInfoValue;
+  public SymptomGroup;
+  public DiseaseInfoNames;
+  public Valid;
+
+  constructor(DiseaseName, DiseaseInfoNames, SymptomGroup, Valid, DiseaseInfoValue) {
+    this.DiseaseName = DiseaseName;
+    this.DiseaseInfoNames = DiseaseInfoNames;
+    this.SymptomGroup = SymptomGroup;
+    this.Valid = Valid;
+    this.DiseaseInfoValue = DiseaseInfoValue;
+  }
   
 
 }
+
+var temp = {
+          DiseaseName: rows.item(i).DiseaseName,
+          DiseaseInfoNames: rows.item(i).DiseaseInfoNames,
+          SymptomGroup: rows.item(i).SymptomGroup,
+          Valid: rows.item(i).Valid,
+          DiseaseInfoValue: rows.item(i).DiseaseInfoValue,
+          DiseaseEval: rows.item(i).DiseaseEval
+
+
+*/
+

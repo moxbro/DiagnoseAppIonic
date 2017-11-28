@@ -27,6 +27,7 @@ export class ShowSymptomsPage {
   public chosenSymptoms: String[] = [];
   private searchQuery: string = null;
   public db;
+  private isenabled = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite) {
     this.sqlite.create(this.options).then((db: SQLiteObject) => {
@@ -55,6 +56,12 @@ export class ShowSymptomsPage {
         this.chosenSymptoms.push(rows.item(i).Name);
       console.log("Number of Chosen Symptoms = " + this.chosenSymptoms.length);
     });
+    //Button Check
+    if (this.chosenSymptoms.length == 0) {
+      this.isenabled = false;
+    } else {
+      this.isenabled = true;
+    }
   }
 
   public typing($value) {
@@ -75,6 +82,8 @@ export class ShowSymptomsPage {
     //clearing searchQuery
     this.namesShown = [];
     this.searchQuery = "";
+
+    this.isenabled = true;
   }
 
   async deleteChosenSymptom($value) {
@@ -94,6 +103,13 @@ export class ShowSymptomsPage {
       console.log("Delete Symptom ERROR: " + JSON.stringify(error.err));
       console.log($value);
     });
+
+    //Button Check
+    if (this.chosenSymptoms.length == 0) {
+      this.isenabled = false;
+    } else {
+      this.isenabled = true;
+    }
   }
 
   async dbReset() {
