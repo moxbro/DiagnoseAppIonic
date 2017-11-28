@@ -15,6 +15,20 @@
 
 <ion-content padding>
 
+
+  <ion-card *ngFor="let diseaseName of diseaseNames">
+
+    <ion-card-header>
+      {{ diseaseName }}
+    </ion-card-header>
+
+    <ion-card-content (click)="onMoreDisease(diseaseName)">
+
+    </ion-card-content>
+
+  </ion-card>
+
+
   <ion-list>
     <ion-item *ngFor="let name of names">
       {{ name }}

@@ -18,18 +18,19 @@ export class ShowDiseasesPage {
 
   private options = { name: "DbDiagnosis.db", location: 'default', createFromLocation: 1 };
   private queryNames = "SELECT  DiseaseName FROM ChosenSynonymsDiseases;";
-  private secoundqueryName = "Name FROM ChosenSynonymsNamesVisible;";
-  public names: String[] = [];
+  private secoundqueryName = "SELECT Name FROM ChosenSynonymsNamesVisible;";
+  public diseaseNames: String[] = [];
   public chosenSymptoms: String[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite) {
     this.sqlite.create(this.options).then((db: SQLiteObject) => {
-      db.executeSql(this.secoundqueryName, {}).then((data) => {
+      db.executeSql(this.queryNames, {}).then((data) => {
         let rows = data.rows;
         for (let i = 0; i < rows.length; i++)
-          this.names.push(rows.item(i).Name);
+          this.diseaseNames.push(rows.item(i).DiseaseName);
+          console.log("ShowDiseases-Load: " + JSON.stringify(data));
       })
-      this.names.push(this.names.length.toString());
+      //this.names.push(this.names.length.toString());
     });
 
     //this.navParams.get('chosenSymptoms');

@@ -21,12 +21,15 @@ export class ShowSymptomsPage {
   private queryNames = "SELECT Name FROM TargetSynonymsVisible";
   public names: String[] = [];
   public namesShown: String[] = [];
+  public values: String[] = [];
+  public value;
   public chosenSymptoms: String[] = [];
   private searchQuery: string = null;
+  public db;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite) {
     this.sqlite.create(this.options).then((db: SQLiteObject) => {
-      db.executeSql(this.queryNames, {}).then((data) => {
+      this.db = db.executeSql(this.queryNames, {}).then((data) => {
         let rows = data.rows;
         for (let i = 0; i < rows.length; i++)
           this.names.push(rows.item(i).Name);
@@ -66,22 +69,67 @@ export class ShowSymptomsPage {
     if (index !== -1) {
       this.chosenSymptoms.splice(index, 1);
     }
-
     //adding deleted item back to the List 'names'
     this.names.push($value);
   }
 
-  public getDiagnos() {
+  async dbReset() {
+    let db = await this.sqlite.create(this.options);
+    //DB Reset
+    await db.executeSql("INSERT INTO Actions (Command) VALUES ('DATABASE_RESET');", []).then((data) => {
+      console.log("Reset: " + JSON.stringify(data));
+    }, (error) => {
+      console.log("Reset ERROR: " + JSON.stringify(error.err));
+    });
+  }
 
-    this.sqlite.create(this.options).then((db: SQLiteObject) => {
-      //db.executeSql("INSERT INTO ChosenSynonymsNames (Name, Source) VALUES (?,?)", 
-      //{chosenSymptoms: this.chosenSymptoms[0], Source: 2})});
+  async initAgeSex() {
+    let db = await this.sqlite.create(this.options);
+    //Age+Sex
+    await db.executeSql("INSERT INTO ChosenSynonymsNames (Name, Source) VALUES ('SYMBOL_USER_GENDER_FEMALE', 1);", []).then((data) => {
+      console.log("INSERTED: " + JSON.stringify(data));
+    }, (error) => {
+      console.log("Gender ERROR: " + JSON.stringify(error.err));
+    });
 
-      db.executeSql("INSERT INTO ChosenSynonymsNames (Id, Source) VALUES (2,2)", 
-      []).then((data) => {
-        console.log("INSERTED: " + JSON.stringify(data));
-      })});
+    await db.executeSql("INSERT INTO ChosenSynonymsNames (Name, Source) VALUES ('SYMBOL_USER_AGE_07', 1);", []).then((data) => {
+      console.log("INSERTED: " + JSON.stringify(data));
+    }, (error) => {
+      console.log("Age ERROR: " + JSON.stringify(error.err));
+    });
+  }
 
+  async configDB() {
+    let db = await this.sqlite.create(this.options);
+    //Database Config
+    await db.executeSql("SELECT Value FROM Parameters WHERE Key = 'DatabasePragma';", []).then((data) => {
+      let rows = data.rows;
+      this.value = rows.item(0).Value;
+      console.log("GetValue = " + this.value);
+    });
+
+    this.values = this.value.split(";");
+    for (let i = 0; i < this.values.length; i++) {
+      await db.executeSql(this.values[i] + ";", []).then((data) => {
+        console.log(this.values[i]);
+        console.log("Value INSERTED: " + JSON.stringify(data));
+      }, (error) => {
+        console.log(this.values[i]);
+        console.log("Value ERROR: " + JSON.stringify(error.err));
+      });
+    }
+  }
+
+  async getDiagnos() {
+    let db = await this.sqlite.create(this.options);
+    //Adding Symptom
+    for (let i = 0; i < this.chosenSymptoms.length; i++) {
+      await db.executeSql("INSERT INTO ChosenSynonymsNames (Name, Source) VALUES (?,?);", [this.chosenSymptoms[i], 2]).then((data) => {
+        console.log("INSERTED: " + this.chosenSymptoms[i] + JSON.stringify(data));
+      }, (error) => {
+        console.log("Symptom ERROR: " + this.chosenSymptoms[i] + JSON.stringify(error.err));
+      });
+    }
     //Goto Diagnos
     this.navCtrl.push(ShowDiseasesPage);
     //this.navCtrl.push(ShowDiseasesPage, {chosenSymptoms: this.chosenSymptoms});
