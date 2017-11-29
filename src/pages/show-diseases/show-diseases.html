@@ -10,29 +10,37 @@
     <ion-title>showDiseases</ion-title>
   </ion-navbar>
 
+  <!--
+    https://stackoverflow.com/questions/38412940/how-can-i-create-an-accordion-list-within-ionic-2
+  -->
+
 </ion-header>
 
 
 <ion-content padding>
 
 
-  <ion-card *ngFor="let diseaseName of diseaseNames">
+  <ion-card *ngFor="let disease of diseaseNames">
 
-    <ion-card-header>
-      {{ diseaseName }}
+    <ion-card-header (click)="toggleDetails(disease)">
+      <ion-icon color="primary" item-right [name]="disease.icon"></ion-icon>
+      &nbsp; {{ disease.title }}
     </ion-card-header>
 
-    <ion-card-content (click)="onMoreDisease(diseaseName)">
-      {{ randomText }}
+    <ion-card-content *ngIf="disease.showDetails">
+      {{ disease.details }}
     </ion-card-content>
 
   </ion-card>
 
-<!--
+
+
+  <!--
   <ion-list>
     <ion-item *ngFor="let DiseaseName of diseaseNames">
       {{ DiseaseName }}
     </ion-item>
   </ion-list>
 -->
+
 </ion-content>
