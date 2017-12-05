@@ -54,7 +54,7 @@ export class ShowSymptomsPage {
   }
 
   ionViewDidLoad() {
-    this.tempmethod();
+    //this.tempmethod();
     console.log('ionViewDidLoad ShowSymptomsPage');
   }
 
@@ -82,6 +82,9 @@ export class ShowSymptomsPage {
 
   public ListItemClick($value) {
     this.chosenSymptoms.push($value);
+
+    //Adding Symptom to ChosenSymtom in Database
+    this.addSymptom($value);
 
     //Deleting selected item in names
     var index = this.names.indexOf($value);
@@ -169,8 +172,19 @@ export class ShowSymptomsPage {
     }
   }
 
+  async addSymptom(symptom) {
+    let db = await this.sqlite.create(this.options);
+    //Adding Symptom
+    await db.executeSql("INSERT INTO ChosenSynonymsNames (Name, Source) VALUES (?,?);", [symptom, 2]).then((data) => {
+      console.log("INSERTED: " + symptom + JSON.stringify(data));
+    }, (error) => {
+      console.log("Symptom ERROR: " + symptom + JSON.stringify(error.err));
+    });
+  }
+
   async getDiagnos() {
     let db = await this.sqlite.create(this.options);
+    /*
     //Adding Symptom
     for (let i = 0; i < this.chosenSymptoms.length; i++) {
       await db.executeSql("INSERT INTO ChosenSynonymsNames (Name, Source) VALUES (?,?);", [this.chosenSymptoms[i], 2]).then((data) => {
@@ -179,9 +193,11 @@ export class ShowSymptomsPage {
         console.log("Symptom ERROR: " + this.chosenSymptoms[i] + JSON.stringify(error.err));
       });
     }
+    */
+    
     //Goto Diagnos
     //this.navCtrl.push(ShowDiseasesPage);
-    this.navCtrl.push(ShowDiseasesPage, {start: this.start});
+    this.navCtrl.push(ShowDiseasesPage, { start: this.start });
   }
 
 }

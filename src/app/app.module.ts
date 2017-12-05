@@ -9,13 +9,15 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ShowDiseasesPage } from '../pages/show-diseases/show-diseases';
 import { ShowSymptomsPage } from '../pages/show-symptoms/show-symptoms';
+import { AgeSexPage } from '../pages/age-sex/age-sex'
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ShowDiseasesPage,
-    ShowSymptomsPage   
+    ShowSymptomsPage,
+    AgeSexPage   
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,8 @@ import { ShowSymptomsPage } from '../pages/show-symptoms/show-symptoms';
     MyApp,
     HomePage,
     ShowDiseasesPage,
-    ShowSymptomsPage
+    ShowSymptomsPage,
+    AgeSexPage
   ],
   providers: [
     StatusBar,
