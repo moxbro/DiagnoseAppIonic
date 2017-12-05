@@ -28,6 +28,7 @@ export class ShowSymptomsPage {
   private searchQuery: string = null;
   public db;
   private isenabled = false;
+  private start;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite) {
     this.sqlite.create(this.options).then((db: SQLiteObject) => {
@@ -40,10 +41,20 @@ export class ShowSymptomsPage {
     });
 
     this.loadChosenSymptoms();
+  }
 
+  tempmethod() {
+    this.start = new Date().getTime();
+    this.typing("B");
+    this.typing("Ba");
+    this.typing("Bau");
+    this.ListItemClick("Bauchschwellung");
+    this.getDiagnos();
+    console.log("Start: " + this.start);
   }
 
   ionViewDidLoad() {
+    this.tempmethod();
     console.log('ionViewDidLoad ShowSymptomsPage');
   }
 
@@ -65,10 +76,9 @@ export class ShowSymptomsPage {
   }
 
   public typing($value) {
-    //this.names[0] = $value;
-    //this.names = this.names.filter($value);
     this.namesShown = this.names.filter((s: String) => s.match(new RegExp($value, "i")));
   }
+
 
   public ListItemClick($value) {
     this.chosenSymptoms.push($value);
@@ -170,8 +180,8 @@ export class ShowSymptomsPage {
       });
     }
     //Goto Diagnos
-    this.navCtrl.push(ShowDiseasesPage);
-    //this.navCtrl.push(ShowDiseasesPage, {chosenSymptoms: this.chosenSymptoms});
+    //this.navCtrl.push(ShowDiseasesPage);
+    this.navCtrl.push(ShowDiseasesPage, {start: this.start});
   }
 
 }
